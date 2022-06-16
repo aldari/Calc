@@ -4,10 +4,11 @@
     {
         int i = 1;
         enum Token { NUMBER, PLUS = '+', MINUS = '-', END };
-        Token currToken; 
+        Token currToken;
 
-        public double Expr()
+        public double Expr(int size)
         {
+            i = size;
             double left = SingleValue();
             while (true)
             {
@@ -27,15 +28,15 @@
 
         double SingleValue()
         {
-            currToken = GetCurrToken();
+            currToken = GetNextToken();
             return 2;
         }
 
-        private Token GetCurrToken()
+        private Token GetNextToken()
         {
-            if (i > 7)
+            if (i == 0)
                 return Token.END;
-            return i++ % 2 == 1 ? Token.NUMBER : Token.PLUS;
+            return i-- % 2 == 1 ? Token.NUMBER : Token.PLUS;
         }
     }
 }
