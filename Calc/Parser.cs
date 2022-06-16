@@ -1,24 +1,27 @@
 ﻿namespace Calc
 {
+    public enum Token { NUMBER, PLUS = '+', MINUS = '-', MUL = '*', DIV = '/', END };
     public class Parser
     {
-        int i = 1;
-        enum Token { NUMBER, PLUS = '+', MINUS = '-', END };
-        Token currToken;
+        private readonly ITokenizer _tokenizer;
 
-        public double Expr(int size)
+        public Parser(ITokenizer tokenizer)
         {
-            i = size;
-            double left = SingleValue();
+            _tokenizer = tokenizer;
+        }
+
+        public double Expr()
+        {
+            double left = Mult();
             while (true)
             {
-                switch (currToken)
+                switch (_tokenizer.GetCurrToken())
                 {
                     case Token.PLUS:
-                        left += SingleValue();
+                        left += Mult();
                         break;
                     case Token.MINUS:
-                        left -= SingleValue();
+                        left -= Mult();
                         break;
                     default:
                         return left;
@@ -26,17 +29,23 @@
             }
         }
 
-        double SingleValue()
+        public double Mult()
         {
-            currToken = GetNextToken();
-            return 2;
-        }
-
-        private Token GetNextToken()
-        {
-            if (i == 0)
-                return Token.END;
-            return i-- % 2 == 1 ? Token.NUMBER : Token.PLUS;
+            double left = _tokenizer.SingleValue();
+            while (true)
+            {
+                switch (_tokenizer.GetCurrToken())
+                {
+                    case Token.MUL:
+                        left += _tokenizer.SingleValue();
+                        break;
+                    case Token.DIV:
+                        left -= _tokenizer.SingleValue();
+                        break;
+                    default:
+                        return left;
+                }
+            }
         }
     }
 }
