@@ -15,7 +15,13 @@ namespace Calc.Tests
         {
             var result = sut.GetTokens("2+3*4");
 
-            result.Should().BeEquivalentTo(new TokenType[] { TokenType.NUMBER, TokenType.PLUS, TokenType.NUMBER, TokenType.MUL, TokenType.NUMBER });
+            result.Should().BeEquivalentTo(new Token[] { 
+                new Token(TokenType.NUMBER, 2),
+                new Token(TokenType.PLUS),
+                new Token(TokenType.NUMBER, 3),
+                new Token(TokenType.MUL),
+                new Token(TokenType.NUMBER, 4)
+            });
         }
 
         [Fact]
@@ -23,7 +29,19 @@ namespace Calc.Tests
         {
             var result = sut.GetTokens("(2+3)*(4-9)");
 
-            result.Should().BeEquivalentTo(new TokenType[] { TokenType.LP, TokenType.NUMBER, TokenType.PLUS, TokenType.NUMBER, TokenType.RP, TokenType.MUL, TokenType.LP, TokenType.NUMBER, TokenType.MINUS, TokenType.NUMBER, TokenType.RP });
+            result.Should().BeEquivalentTo(new Token[] {
+                new Token(TokenType.LP),
+                new Token(TokenType.NUMBER, 2),
+                new Token(TokenType.PLUS),
+                new Token(TokenType.NUMBER, 3),
+                new Token(TokenType.RP),
+                new Token(TokenType.MUL),
+                new Token(TokenType.LP),
+                new Token(TokenType.NUMBER, 4),
+                new Token(TokenType.MINUS),
+                new Token(TokenType.NUMBER, 9),
+                new Token(TokenType.RP)
+            });
         }
 
         [Fact]
@@ -31,7 +49,11 @@ namespace Calc.Tests
         {
             var result = sut.GetTokens("524/3285");
 
-            result.Should().BeEquivalentTo(new TokenType[] { TokenType.NUMBER, TokenType.DIV, TokenType.NUMBER });
+            result.Should().BeEquivalentTo(new Token[] {
+                new Token(TokenType.NUMBER, 524),
+                new Token(TokenType.DIV),
+                new Token(TokenType.NUMBER, 3285)
+            });
         }
     }
 }
