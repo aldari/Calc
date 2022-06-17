@@ -12,7 +12,7 @@ namespace Calc.Tests
             tokenizer.SetupSequence(x => x.SingleValue())
                 .Returns(2);
             tokenizer.SetupSequence(x => x.GetCurrToken())
-                .Returns(Token.NUMBER);
+                .Returns(TokenType.NUMBER);
             var sut = new Parser(tokenizer.Object);
 
 
@@ -31,9 +31,9 @@ namespace Calc.Tests
                 .Returns(2)
                 .Returns(2);
             tokenizer.SetupSequence(x => x.GetCurrToken())
-                .Returns(Token.NUMBER)
-                .Returns(Token.PLUS)
-                .Returns(Token.NUMBER);
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.PLUS)
+                .Returns(TokenType.NUMBER);
             var sut = new Parser(tokenizer.Object);
 
 
@@ -53,11 +53,11 @@ namespace Calc.Tests
                 .Returns(2)
                 .Returns(2);
             tokenizer.SetupSequence(x => x.GetCurrToken())
-                .Returns(Token.NUMBER)
-                .Returns(Token.PLUS)
-                .Returns(Token.NUMBER)
-                .Returns(Token.PLUS)
-                .Returns(Token.NUMBER);
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.PLUS)
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.PLUS)
+                .Returns(TokenType.NUMBER);
             var sut = new Parser(tokenizer.Object);
 
 
@@ -77,11 +77,11 @@ namespace Calc.Tests
                 .Returns(3)
                 .Returns(4);
             tokenizer.SetupSequence(x => x.GetCurrToken())
-                .Returns(Token.NUMBER)
-                .Returns(Token.PLUS)
-                .Returns(Token.NUMBER)
-                .Returns(Token.MUL)
-                .Returns(Token.NUMBER);
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.PLUS)
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.MUL)
+                .Returns(TokenType.NUMBER);
             var sut = new Parser(tokenizer.Object);
 
 
@@ -102,13 +102,13 @@ namespace Calc.Tests
                 .Returns(4)
                 .Returns(7);
             tokenizer.SetupSequence(x => x.GetCurrToken())
-                .Returns(Token.NUMBER)
-                .Returns(Token.MUL)
-                .Returns(Token.NUMBER)
-                .Returns(Token.PLUS)
-                .Returns(Token.NUMBER)
-                .Returns(Token.MUL)
-                .Returns(Token.NUMBER);
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.MUL)
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.PLUS)
+                .Returns(TokenType.NUMBER)
+                .Returns(TokenType.MUL)
+                .Returns(TokenType.NUMBER);
             var sut = new Parser(tokenizer.Object);
 
 

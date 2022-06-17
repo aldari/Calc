@@ -2,7 +2,7 @@
 {
     public interface ITokenizer
     {
-        Token GetCurrToken();
+        TokenType GetCurrToken();
         double SingleValue();
     }
 }

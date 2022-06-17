@@ -7,35 +7,26 @@ namespace Calc
         public IEnumerable<Token> GetTokens(string expr)
         {
             int i = 0;
-            Token currToken;
+            double currValue = 0;
+            TokenType currToken;
             while (i < expr.Length)
             {
                 if (i >= expr.Length)
                 {
-                    currToken = Token.END;
-                    yield return currToken;
+                    yield return new Token(TokenType.END);
                 }
                 char ch = expr[i++];
                 switch (ch)
                 {
                     case '*':
-                        currToken = Token.MUL;
-                        break;
                     case '/':
-                        currToken = Token.DIV;
-                        break;
                     case '+':
-                        currToken = Token.PLUS;
-                        break;
                     case '-':
-                        currToken = Token.MINUS;
-                        break;
                     case '(':
-                        currToken = Token.LP;
-                        break;
                     case ')':
-                        currToken = Token.RP;
+                        currToken = (TokenType) ch;
                         break;
+
                     case '0':
                     case '1':
                     case '2':
@@ -52,14 +43,15 @@ namespace Calc
                         {
                             sb.Append(expr[i++]);
                         }
-                        double currValue = Int32.Parse(sb.ToString());
-                        currToken = Token.NUMBER;
+                        currValue = Int32.Parse(sb.ToString());
+                        currToken = TokenType.NUMBER;
                         break;
+
                     default:
-                        currToken = Token.END;
+                        currToken = TokenType.END;
                         break;
                 }
-                yield return currToken;
+                yield return new Token(currToken, currToken ==TokenType.NUMBER ? currValue : 0);
             }
         }
     }

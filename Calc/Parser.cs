@@ -1,6 +1,18 @@
 ﻿namespace Calc
 {
-    public enum Token { NUMBER, END, PLUS = '+', MINUS = '-', MUL = '*', DIV = '/', LP='(', RP = ')' };
+    public enum TokenType { NUMBER, END, PLUS = '+', MINUS = '-', MUL = '*', DIV = '/', LP='(', RP = ')' };
+    readonly public struct Token
+    {
+        public Token(TokenType type, double value = 0)
+        {
+            Type = type;
+            Value = value;
+        }
+
+        public TokenType Type {get;}
+        public double Value { get; }
+    }
+
     public class Parser
     {
         private readonly ITokenizer _tokenizer;
@@ -18,10 +30,10 @@
             {
                 switch (_tokenizer.GetCurrToken())
                 {
-                    case Token.PLUS:
+                    case TokenType.PLUS:
                         left += Mult();
                         break;
-                    case Token.MINUS:
+                    case TokenType.MINUS:
                         left -= Mult();
                         break;
                     default:
@@ -37,10 +49,10 @@
             {
                 switch (_tokenizer.GetCurrToken())
                 {
-                    case Token.MUL:
+                    case TokenType.MUL:
                         left *= _tokenizer.SingleValue();
                         break;
-                    case Token.DIV:
+                    case TokenType.DIV:
                         left /= _tokenizer.SingleValue();
                         break;
                     default:
