@@ -4,13 +4,6 @@ namespace Calc.Tests
 {
     public class ParserTests
     {
-        private Parser _sut;
-
-        public ParserTests()
-        {
-            _sut = new Parser(null);
-        }
-
         [Fact]
         public void SingleNumber()
         {
