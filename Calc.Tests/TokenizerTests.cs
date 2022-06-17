@@ -4,21 +4,16 @@ namespace Calc.Tests
 {
     public class TokenizerTests
     {
-        List<Token> GetTokens(string input)
-        {
-            var sut = new Tokenizer(input);
-            List<Token> list = new ();
-            while (sut.MoveNext())
-            {
-                list.Add(sut.GetCurrToken());
-            }
-            return list;
-        }
+        private Tokenizer sut;
 
+        public TokenizerTests()
+        {
+            sut = new Tokenizer();
+        }
         [Fact]
         public void Test()
         {
-            var result = GetTokens("2+3*4");
+            var result = sut.GetTokens("2+3*4");
 
             result.Should().BeEquivalentTo(new Token[] { Token.NUMBER, Token.PLUS, Token.NUMBER, Token.MUL, Token.NUMBER });
         }
@@ -26,7 +21,7 @@ namespace Calc.Tests
         [Fact]
         public void Test2()
         {
-            var result = GetTokens("(2+3)*(4-9)");
+            var result = sut.GetTokens("(2+3)*(4-9)");
 
             result.Should().BeEquivalentTo(new Token[] { Token.LP, Token.NUMBER, Token.PLUS, Token.NUMBER, Token.RP, Token.MUL, Token.LP, Token.NUMBER, Token.MINUS, Token.NUMBER, Token.RP });
         }
@@ -34,7 +29,7 @@ namespace Calc.Tests
         [Fact]
         public void Test3()
         {
-            var result = GetTokens("524/3285");
+            var result = sut.GetTokens("524/3285");
 
             result.Should().BeEquivalentTo(new Token[] { Token.NUMBER, Token.DIV, Token.NUMBER });
         }
