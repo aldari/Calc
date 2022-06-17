@@ -1,6 +1,6 @@
 ﻿namespace Calc
 {
-    public enum Token { NUMBER, PLUS = '+', MINUS = '-', MUL = '*', DIV = '/', END };
+    public enum Token { NUMBER, END, PLUS = '+', MINUS = '-', MUL = '*', DIV = '/', LP='(', RP = ')' };
     public class Parser
     {
         private readonly ITokenizer _tokenizer;
@@ -37,10 +37,10 @@
                 switch (_tokenizer.GetCurrToken())
                 {
                     case Token.MUL:
-                        left += _tokenizer.SingleValue();
+                        left *= _tokenizer.SingleValue();
                         break;
                     case Token.DIV:
-                        left -= _tokenizer.SingleValue();
+                        left /= _tokenizer.SingleValue();
                         break;
                     default:
                         return left;
