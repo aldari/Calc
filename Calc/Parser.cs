@@ -10,8 +10,9 @@
             _tokenizer = tokenizer;
         }
 
-        public double Expr()
+        public double Expr(string input)
         {
+            var enumerator = new Tokenizer().GetTokens(input).GetEnumerator();
             double left = Mult();
             while (true)
             {
@@ -29,7 +30,7 @@
             }
         }
 
-        public double Mult()
+        private double Mult()
         {
             double left = _tokenizer.SingleValue();
             while (true)

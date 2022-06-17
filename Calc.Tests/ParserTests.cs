@@ -16,7 +16,7 @@ namespace Calc.Tests
             var sut = new Parser(tokenizer.Object);
 
 
-            var result = sut.Expr();
+            var result = sut.Expr(expr);
 
 
             result.Equals(2);
@@ -37,7 +37,7 @@ namespace Calc.Tests
             var sut = new Parser(tokenizer.Object);
 
 
-            var result = sut.Expr();
+            var result = sut.Expr(expr);
 
 
             result.Equals(4);
@@ -61,7 +61,7 @@ namespace Calc.Tests
             var sut = new Parser(tokenizer.Object);
 
 
-            var result = sut.Expr();
+            var result = sut.Expr(expr);
 
 
             result.Equals(4);
@@ -85,7 +85,7 @@ namespace Calc.Tests
             var sut = new Parser(tokenizer.Object);
 
 
-            var result = sut.Expr();
+            var result = sut.Expr(expr);
 
 
             result.Equals(14);
@@ -112,7 +112,7 @@ namespace Calc.Tests
             var sut = new Parser(tokenizer.Object);
 
 
-            var result = sut.Expr();
+            var result = sut.Expr(expr);
 
 
             result.Equals(34);

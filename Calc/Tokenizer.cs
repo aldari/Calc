@@ -4,8 +4,6 @@ namespace Calc
 {
     public class Tokenizer
     {
-        private double currValue;
-
         public IEnumerable<Token> GetTokens(string expr)
         {
             int i = 0;
@@ -54,7 +52,7 @@ namespace Calc
                         {
                             sb.Append(expr[i++]);
                         }
-                        currValue = Int32.Parse(sb.ToString());
+                        double currValue = Int32.Parse(sb.ToString());
                         currToken = Token.NUMBER;
                         break;
                     default:
