@@ -65,5 +65,32 @@ namespace Calc.Tests
 
             result.Should().Be(12780300);
         }
+
+        [Fact]
+        public void UnarMinusExprReturnsMinusThree()
+        {
+            var result = _sut.Evaluate("4+-7");
+
+
+            result.Should().Be(-3);
+        }
+
+        [Fact]
+        public void UnarMinusExpr2ReturnsReturnsMinusThree()
+        {
+            var result = _sut.Evaluate("4+(-7)");
+
+
+            result.Should().Be(-3);
+        }
+
+        [Fact]
+        public void UnarMinusExpr3ReturnsReturnsMinusThree()
+        {
+            var result = _sut.Evaluate("4+(-(-7))");
+
+
+            result.Should().Be(11);
+        }
     }
 }

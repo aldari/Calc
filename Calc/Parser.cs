@@ -18,16 +18,16 @@
         private double Expr(IEnumerator<Token> enumerator)
         {
             
-            double left = Mult(enumerator);
+            double left = MultiplExpr(enumerator);
             while (true)
             {
                 switch (enumerator.Current.Type)
                 {
                     case TokenType.PLUS:
-                        left += Mult(enumerator);
+                        left += MultiplExpr(enumerator);
                         break;
                     case TokenType.MINUS:
-                        left -= Mult(enumerator);
+                        left -= MultiplExpr(enumerator);
                         break;
                     default:
                         return left;
@@ -35,18 +35,18 @@
             }
         }
 
-        private double Mult(IEnumerator<Token> enumerator)
+        private double MultiplExpr(IEnumerator<Token> enumerator)
         {
-            double left = SingleToken(enumerator);
+            double left = SimpleExpr(enumerator);
             while (true)
             {
                 switch (enumerator.Current.Type)
                 {
                     case TokenType.MUL:
-                        left *= SingleToken(enumerator);
+                        left *= SimpleExpr(enumerator);
                         break;
                     case TokenType.DIV:
-                        left /= SingleToken(enumerator);
+                        left /= SimpleExpr(enumerator);
                         break;
                     default:
                         return left;
@@ -54,7 +54,7 @@
             }
         }
 
-        private double SingleToken(IEnumerator<Token> enumerator)
+        private double SimpleExpr(IEnumerator<Token> enumerator)
         {
             double v;
             enumerator.MoveNext();
