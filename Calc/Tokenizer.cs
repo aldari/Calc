@@ -2,7 +2,7 @@
 
 namespace Calc
 {
-    public class Tokenizer
+    public class Tokenizer: ITokenizer
     {
         public IEnumerable<Token> GetTokens(string expr)
         {

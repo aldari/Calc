@@ -4,5 +4,6 @@
     {
         TokenType GetCurrToken();
         double SingleValue();
+        IEnumerable<Token> GetTokens(string expr);
     }
 }

@@ -24,17 +24,17 @@
 
         public double Expr(string input)
         {
-            var enumerator = new Tokenizer().GetTokens(input).GetEnumerator();
-            double left = Mult();
+            var enumerator = _tokenizer.GetTokens(input).GetEnumerator();
+            double left = Mult(enumerator);
             while (true)
             {
-                switch (_tokenizer.GetCurrToken())
+                switch (enumerator.Current.Type)
                 {
                     case TokenType.PLUS:
-                        left += Mult();
+                        left += Mult(enumerator);
                         break;
                     case TokenType.MINUS:
-                        left -= Mult();
+                        left -= Mult(enumerator);
                         break;
                     default:
                         return left;
@@ -42,23 +42,34 @@
             }
         }
 
-        private double Mult()
+        private double Mult(IEnumerator<Token> enumerator)
         {
-            double left = _tokenizer.SingleValue();
+            double left = SingleToken(enumerator);
             while (true)
             {
-                switch (_tokenizer.GetCurrToken())
+                switch (enumerator.Current.Type)
                 {
                     case TokenType.MUL:
-                        left *= _tokenizer.SingleValue();
+                        left *= SingleToken(enumerator);
                         break;
                     case TokenType.DIV:
-                        left /= _tokenizer.SingleValue();
+                        left /= SingleToken(enumerator);
                         break;
                     default:
                         return left;
                 }
             }
+        }
+
+        private double SingleToken(IEnumerator<Token> enumerator)
+        {
+            enumerator.MoveNext();
+            if (enumerator.Current.Type == TokenType.NUMBER)
+            {
+                return enumerator.Current.Value;
+            }
+            else
+                return 0;
         }
     }
 }
