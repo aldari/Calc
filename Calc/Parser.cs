@@ -9,9 +9,15 @@
             _tokenizer = tokenizer;
         }
 
-        public double Expr(string input)
+        public double Evaluate(string input)
         {
             var enumerator = _tokenizer.GetTokens(input).GetEnumerator();
+            return Expr(enumerator);
+        }
+
+        private double Expr(IEnumerator<Token> enumerator)
+        {
+            
             double left = Mult(enumerator);
             while (true)
             {
@@ -50,15 +56,21 @@
 
         private double SingleToken(IEnumerator<Token> enumerator)
         {
+            double v;
             enumerator.MoveNext();
-            if (enumerator.Current.Type == TokenType.NUMBER)
+            switch (enumerator.Current.Type)
             {
-                double v = enumerator.Current.Value;
-                enumerator.MoveNext();
-                return v;
+                case TokenType.NUMBER:
+                    v = enumerator.Current.Value;
+                    enumerator.MoveNext();
+                    return v;
+                case TokenType.LP:
+                    v = Expr(enumerator);
+                    enumerator.MoveNext();
+                    return v;
+                default:
+                    return 0;
             }
-            else
-                return 0;
         }
     }
 }
