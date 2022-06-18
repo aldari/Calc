@@ -51,7 +51,7 @@ namespace Calc
                         currToken = TokenType.END;
                         break;
                 }
-                yield return new Token(currToken, currToken ==TokenType.NUMBER ? currValue : 0);
+                yield return new Token(currToken, currToken == TokenType.NUMBER ? currValue : 0);
             }
         }
     }

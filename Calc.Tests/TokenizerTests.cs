@@ -10,6 +10,7 @@ namespace Calc.Tests
         {
             sut = new Tokenizer();
         }
+
         [Fact]
         public void Test()
         {

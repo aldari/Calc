@@ -53,7 +53,9 @@
             enumerator.MoveNext();
             if (enumerator.Current.Type == TokenType.NUMBER)
             {
-                return enumerator.Current.Value;
+                double v = enumerator.Current.Value;
+                enumerator.MoveNext();
+                return v;
             }
             else
                 return 0;
