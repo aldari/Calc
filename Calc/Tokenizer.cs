@@ -13,9 +13,13 @@ namespace Calc
             {
                 if (i >= expr.Length)
                 {
-                    yield return new Token(TokenType.END);
+                    yield break;
                 }
                 char ch = expr[i++];
+                while (i < expr.Length && char.IsWhiteSpace(ch))
+                {
+                    ch = expr[i++];
+                }
                 switch (ch)
                 {
                     case '*':
@@ -46,10 +50,8 @@ namespace Calc
                         currValue = Int32.Parse(sb.ToString());
                         currToken = TokenType.NUMBER;
                         break;
-
                     default:
-                        currToken = TokenType.END;
-                        break;
+                        yield break;
                 }
                 yield return new Token(currToken, currToken == TokenType.NUMBER ? currValue : 0);
             }
