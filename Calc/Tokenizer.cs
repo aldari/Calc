@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 
 namespace Calc
 {
@@ -41,13 +42,19 @@ namespace Calc
                     case '7':
                     case '8':
                     case '9':
+                    case '.':
+                    case ',':
                         StringBuilder sb = new();
                         sb.Append(ch);
-                        while (i < expr.Length && char.IsDigit(expr[i]))
+                        while (i < expr.Length && (char.IsDigit(expr[i]) || expr[i] == ',' || expr[i] =='.'))
                         {
-                            sb.Append(expr[i++]);
+                            if (expr[i] == ',')
+                                sb.Append('.');
+                            else
+                                sb.Append(expr[i]);
+                            i++;
                         }
-                        currValue = Int32.Parse(sb.ToString());
+                        currValue = Double.Parse(sb.ToString(), CultureInfo.InvariantCulture);
                         currToken = TokenType.NUMBER;
                         break;
                     default:

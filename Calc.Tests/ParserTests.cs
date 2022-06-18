@@ -92,5 +92,14 @@ namespace Calc.Tests
 
             result.Should().Be(11);
         }
+
+        [Fact]
+        public void ExprWithFloatNumbersEvaluatesSuccesfull()
+        {
+            var result = _sut.Evaluate("4681.8468/8649.5466");
+
+
+            result.Should().Be(0.5412823372730312);
+        }
     }
 }

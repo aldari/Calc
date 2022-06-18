@@ -76,5 +76,25 @@ namespace Calc.Tests
                 new Token(TokenType.RP)
             });
         }
+
+        [Fact]
+        public void ParseNUmberWithCommaSeparatorSuccesful()
+        {
+            var result = sut.GetTokens("654,684");
+
+            result.Should().BeEquivalentTo(new Token[] {
+                new Token(TokenType.NUMBER, 654.684)
+            });
+        }
+
+        [Fact]
+        public void ParseNUmberWithPeriodSeparatorSuccesful()
+        {
+            var result = sut.GetTokens("654.684");
+
+            result.Should().BeEquivalentTo(new Token[] {
+                new Token(TokenType.NUMBER, 654.684)
+            });
+        }
     }
 }
