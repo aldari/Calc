@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Moq;
 
 namespace Calc.Tests
 {
@@ -19,7 +20,7 @@ namespace Calc.Tests
             var result = sut.Expr(expr);
 
 
-            result.Equals(2);
+            result.Should().Be(2);
         }
 
         [Fact]
@@ -40,7 +41,7 @@ namespace Calc.Tests
             var result = sut.Expr(expr);
 
 
-            result.Equals(4);
+            result.Should().Be(4);
         }
 
         [Fact]
@@ -64,7 +65,7 @@ namespace Calc.Tests
             var result = sut.Expr(expr);
 
 
-            result.Equals(4);
+            result.Should().Be(4);
         }
 
         [Fact]
@@ -88,7 +89,7 @@ namespace Calc.Tests
             var result = sut.Expr(expr);
 
 
-            result.Equals(14);
+            result.Should().Be(14);
         }
 
         [Fact]
@@ -115,7 +116,7 @@ namespace Calc.Tests
             var result = sut.Expr(expr);
 
 
-            result.Equals(34);
+            result.Should().Be(34);
         }
     }
 }
