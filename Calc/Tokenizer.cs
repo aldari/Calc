@@ -9,7 +9,8 @@ namespace Calc
         {
             int i = 0;
             double currValue = 0;
-            TokenType currToken;
+            string currName = null;
+            TokenType currToken = TokenType.NUMBER;
             while (i < expr.Length)
             {
                 if (i >= expr.Length)
@@ -58,9 +59,22 @@ namespace Calc
                         currToken = TokenType.NUMBER;
                         break;
                     default:
-                        yield break;
+                        if (char.IsLetter(ch))
+                        {
+                            StringBuilder s = new();
+                            s.Append(ch);
+                            while (i < expr.Length && char.IsLetter(expr[i]))
+                            {
+                                s.Append(expr[i++]);
+                            }
+                            currName = s.ToString();
+                            currToken = TokenType.NAME;
+                        }
+                        else 
+                            yield break;
+                        break;
                 }
-                yield return new Token(currToken, currToken == TokenType.NUMBER ? currValue : 0);
+                yield return new Token(currToken, currToken == TokenType.NUMBER ? currValue : 0, currToken == TokenType.NAME ? currName: null);
             }
         }
     }

@@ -101,5 +101,23 @@ namespace Calc.Tests
 
             result.Should().Be(0.5412823372730312);
         }
+
+        [Fact]
+        public void FunctionExtensionReturns6()
+        {
+            var result = _sut.Evaluate("2+sin(1.5707963267)+3");
+
+
+            result.Should().Be(6);
+        }
+
+        [Fact]
+        public void FunctionExtensionWithUpperCaseTextReturns6()
+        {
+            var result = _sut.Evaluate("2+SIN(1.5707963267)+3");
+
+
+            result.Should().Be(6);
+        }
     }
 }

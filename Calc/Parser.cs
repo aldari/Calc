@@ -11,7 +11,7 @@
 
         public double Evaluate(string input)
         {
-            var enumerator = _tokenizer.GetTokens(input).GetEnumerator();
+            var enumerator = _tokenizer.GetTokens(input.ToLower()).GetEnumerator();
             return Expr(enumerator);
         }
 
@@ -63,6 +63,13 @@
                     v = enumerator.Current.Value;
                     enumerator.MoveNext();
                     return v;
+                case TokenType.NAME:
+                    if (enumerator.Current.Name != "sin")
+                        throw new ArgumentException();
+                    enumerator.MoveNext();
+                    v = Expr(enumerator);
+                    enumerator.MoveNext();
+                    return Math.Sin(v);
                 case TokenType.LP:
                     v = Expr(enumerator);
                     enumerator.MoveNext();

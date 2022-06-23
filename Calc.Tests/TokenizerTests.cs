@@ -78,7 +78,7 @@ namespace Calc.Tests
         }
 
         [Fact]
-        public void ParseNUmberWithCommaSeparatorSuccesful()
+        public void ParseNumberWithCommaSeparatorSuccesful()
         {
             var result = sut.GetTokens("654,684");
 
@@ -88,12 +88,27 @@ namespace Calc.Tests
         }
 
         [Fact]
-        public void ParseNUmberWithPeriodSeparatorSuccesful()
+        public void ParseNumberWithPeriodSeparatorSuccesful()
         {
             var result = sut.GetTokens("654.684");
 
             result.Should().BeEquivalentTo(new Token[] {
                 new Token(TokenType.NUMBER, 654.684)
+            });
+        }
+
+        [Fact]
+        public void ParseNameSuccesful()
+        {
+            var result = sut.GetTokens("2 + sin(1.5708)");
+
+            result.Should().BeEquivalentTo(new Token[] {
+                new Token(TokenType.NUMBER, 2),
+                new Token(TokenType.PLUS),
+                new Token(TokenType.NAME, 0, "sin"),
+                new Token(TokenType.LP),
+                new Token(TokenType.NUMBER, 1.5708),
+                new Token(TokenType.RP)
             });
         }
     }
