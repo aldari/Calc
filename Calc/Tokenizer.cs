@@ -7,6 +7,8 @@ namespace Calc
     {
         public IEnumerable<Token> GetTokens(string expr)
         {
+            if (expr is null)
+                yield break;
             int i = 0;
             double currValue = 0;
             string currName = null;

@@ -119,5 +119,14 @@ namespace Calc.Tests
 
             result.Should().Be(6);
         }
+
+        [Fact]
+        public void NullInputProcessedWithoutExceptionTest()
+        {
+            var result = _sut.Evaluate(null);
+
+
+            result.Should().Be(0);
+        }
     }
 }

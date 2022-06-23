@@ -11,7 +11,7 @@
 
         public double Evaluate(string input)
         {
-            var enumerator = _tokenizer.GetTokens(input.ToLower()).GetEnumerator();
+            var enumerator = _tokenizer.GetTokens(input?.ToLower()).GetEnumerator();
             return Expr(enumerator);
         }
 
