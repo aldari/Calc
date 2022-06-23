@@ -1,0 +1,18 @@
+﻿@model MathResponseModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<form asp-action="Index" class="">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg" asp-for="Expression" placeholder="Expression">
+        <button type="submit" class="input-group-text btn-success"><i class="bi bi-search me-2"></i> Search</button>
+    </div>
+</form>
+
+<div class="text-left">
+    <h3>
+        @Model.Result
+    </h3>
+</div>
