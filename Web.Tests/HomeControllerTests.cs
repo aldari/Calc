@@ -64,5 +64,26 @@ namespace Web.Tests
                 Result = 0
             });
         }
+
+        [Fact]
+        public void PosttIndexCatchesCalculatorExceptionTest()
+        {
+            var parser = new Mock<IParser>();
+            parser.Setup(x => x.Evaluate(It.IsAny<string>()))
+                .Throws(new CalcCustomException("message"));
+            var controller = new HomeController(parser.Object);
+
+            // Act
+            var result = controller.Index(new InputModel { Expression = "1/0" });
+
+
+            result.Should().BeOfType<ViewResult>();
+            (result as ViewResult).Model.Should().BeEquivalentTo(new MathResponseModel
+            {
+                Expression = "1/0",
+                Result = 0,
+                DescriptionMessage = "message"
+            });
+        }
     }
 }

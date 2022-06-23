@@ -27,14 +27,25 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Index(InputModel model)
         {
-            var value = _parser.Evaluate(model.Expression);
-            return View(new MathResponseModel
+            try
             {
-                Expression = model.Expression,
-                Result = value
-            });
+                var value = _parser.Evaluate(model.Expression);
+                return View(new MathResponseModel
+                {
+                    Expression = model.Expression,
+                    Result = value
+                });
+            }
+            catch (Exception e)
+            {
+                return View(new MathResponseModel
+                {
+                    Expression = model.Expression,
+                    DescriptionMessage = e.Message,
+                    Result = 0
+                });
+            }
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

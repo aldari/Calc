@@ -9,6 +9,13 @@
             _tokenizer = tokenizer;
         }
 
+        delegate double F(double f);
+        static readonly Dictionary<string, F> functions = new();
+        static Parser()
+        {
+            functions.Add("sin", (double i) => Math.Sin(i));
+        }
+
         public double Evaluate(string input)
         {
             var enumerator = _tokenizer.GetTokens(input?.ToLower()).GetEnumerator();
@@ -45,7 +52,10 @@
                         left *= SimpleExpr(enumerator);
                         break;
                     case TokenType.DIV:
-                        left /= SimpleExpr(enumerator);
+                        double d = SimpleExpr(enumerator);
+                        if (d == 0)
+                            throw new CalcCustomException("деление на ноль");
+                        left /= d;
                         break;
                     default:
                         return left;
@@ -64,14 +74,22 @@
                     enumerator.MoveNext();
                     return v;
                 case TokenType.NAME:
-                    if (enumerator.Current.Name != "sin")
-                        throw new ArgumentException();
+                    var name = enumerator.Current.Name;
+                    if (!functions.ContainsKey(name))
+                        throw new CalcCustomException("неверное имя функции");
                     enumerator.MoveNext();
+                    if (enumerator.Current.Type != TokenType.LP)
+                        throw new CalcCustomException("пропущена левая скобка");
                     v = Expr(enumerator);
+                    if (enumerator.Current.Type != TokenType.RP)
+                        throw new CalcCustomException("пропущена правая скобка");
                     enumerator.MoveNext();
-                    return Math.Sin(v);
+                    var func = functions[name];
+                    return func(v);
                 case TokenType.LP:
                     v = Expr(enumerator);
+                    if (enumerator.Current.Type != TokenType.RP)
+                        throw new CalcCustomException("пропущена правая скобка");
                     enumerator.MoveNext();
                     return v;
                 case TokenType.MINUS:
@@ -80,7 +98,7 @@
                     // it is not used, pass compile verification
                     // не используется
                     // подавить ошибку компилятора, выявить тесты проходящие эту ветку
-                    throw new ArgumentException();
+                    throw new CalcCustomException("пропущено выражение");
             }
         }
     }

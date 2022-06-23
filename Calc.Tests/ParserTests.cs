@@ -76,6 +76,15 @@ namespace Calc.Tests
         }
 
         [Fact]
+        public void RepeatingOperatorCausesException()
+        {
+            var action = () => _sut.Evaluate("4+++7");
+
+
+            action.Should().Throw<CalcCustomException>().WithMessage("пропущено выражение");
+        }
+
+        [Fact]
         public void UnarMinusExpr2ReturnsReturnsMinusThree()
         {
             var result = _sut.Evaluate("4+(-7)");
@@ -121,12 +130,46 @@ namespace Calc.Tests
         }
 
         [Fact]
+        public void FunctionExtensionMissingLeftParenthesThrowsException()
+        {
+            var action = () => _sut.Evaluate("2+sin1.5707963267)+3");
+
+
+            action.Should().Throw<CalcCustomException>().WithMessage("пропущена левая скобка");
+        }
+
+        [Fact]
+        public void FunctionExtensionMissingRightParenthesThrowsException()
+        {
+            var action = () => _sut.Evaluate("2+sin(1.5707963267+3");
+
+
+            action.Should().Throw<CalcCustomException>().WithMessage("пропущена правая скобка");
+        }
+
+        [Fact]
         public void NullInputProcessedWithoutExceptionTest()
         {
             var result = _sut.Evaluate(null);
 
 
             result.Should().Be(0);
+        }
+
+        [Fact]
+        public void ZeroDevisionTest()
+        {
+            var action = () => _sut.Evaluate("3/(2-2)");
+
+            action.Should().Throw<CalcCustomException>().WithMessage("деление на ноль");
+        }
+
+        [Fact]
+        public void MissingParenthesTest()
+        {
+            var action = () => _sut.Evaluate("(2+4");
+
+            action.Should().Throw<CalcCustomException>().WithMessage("пропущена правая скобка");
         }
     }
 }
