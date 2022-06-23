@@ -1,6 +1,6 @@
 ﻿namespace Calc
 {
-    public class Parser
+    public class Parser : IParser
     {
         private readonly ITokenizer _tokenizer;
 
@@ -17,7 +17,6 @@
 
         private double Expr(IEnumerator<Token> enumerator)
         {
-            
             double left = MultiplExpr(enumerator);
             while (true)
             {
@@ -68,8 +67,13 @@
                     v = Expr(enumerator);
                     enumerator.MoveNext();
                     return v;
+                case TokenType.MINUS:
+                    return -SimpleExpr(enumerator);
                 default:
-                    return 0;
+                    // it is not used, pass compile verification
+                    // не используется
+                    // подавить ошибку компилятора, выявить тесты проходящие эту ветку
+                    throw new ArgumentException();
             }
         }
     }
